@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Kind</key>
+	<string>Xcode.IDEFoundation.TextSubstitutionPlaygroundTemplateKind</string>
+	<key>Summary</key>
+	<string>An iOS Playground</string>
+	<key>Description</key>
+	<string>Playgrounds provide an interactive environment to play with code.</string>
+	<key>SortOrder</key>
+	<string>20</string>
+	<key>MainTemplateFile</key>
+	<string>___FILEBASENAME___.playground</string>
+	<key>AllowedTypes</key>
+	<array>
+		<string>com.apple.dt.playground</string>
+	</array>
+	<key>DefaultCompletionName</key>
+	<string>MyPlayground</string>
+	<key>Platforms</key>
+	<array>
+		<string>com.apple.platform.iphoneos</string>
+	</array>
+</dict>
+</plist>
