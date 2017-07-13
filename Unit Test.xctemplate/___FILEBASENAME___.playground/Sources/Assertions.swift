@@ -1,163 +1,171 @@
 import XCTest
 
-private func emoji(for bool: Bool) -> Character {
-  return bool ? "✅" : "❌"
+#if os(iOS)
+  import UIKit
+  public typealias Color = UIColor
+#elseif os(macOS)
+  import Cocoa
+  public typealias Color = NSColor
+#endif
+
+private func color(for bool: Bool) -> Color {
+  return bool ? .green : .red
 }
 
 extension XCTestCase {
-  public func XCTAssert(_ expression: @autoclosure () throws -> Bool, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character {
+  public func XCTAssert(_ expression: @autoclosure () throws -> Bool, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color {
     let result = try expression()
     Shim.Assert(result, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: Equatable {
+  public func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: Equatable {
     let result = try expression1() == expression2()
     Shim.AssertEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> T?, _ expression2: @autoclosure () throws -> T?, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: Equatable {
+  public func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> T?, _ expression2: @autoclosure () throws -> T?, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: Equatable {
     let result = try expression1() == expression2()
     Shim.AssertEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> ArraySlice<T>, _ expression2: @autoclosure () throws -> ArraySlice<T>, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: Equatable {
+  public func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> ArraySlice<T>, _ expression2: @autoclosure () throws -> ArraySlice<T>, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: Equatable {
     let result = try expression1() == expression2()
     Shim.AssertEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> ContiguousArray<T>, _ expression2: @autoclosure () throws -> ContiguousArray<T>, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: Equatable {
+  public func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> ContiguousArray<T>, _ expression2: @autoclosure () throws -> ContiguousArray<T>, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: Equatable {
     let result = try expression1() == expression2()
     Shim.AssertEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> [T], _ expression2: @autoclosure () throws -> [T], _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: Equatable {
+  public func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> [T], _ expression2: @autoclosure () throws -> [T], _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: Equatable {
     let result = try expression1() == expression2()
     Shim.AssertEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertEqual<T, U>(_ expression1: @autoclosure () throws -> [T: U], _ expression2: @autoclosure () throws -> [T: U], _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where U: Equatable {
+  public func XCTAssertEqual<T, U>(_ expression1: @autoclosure () throws -> [T: U], _ expression2: @autoclosure () throws -> [T: U], _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where U: Equatable {
     let result = try expression1() == expression2()
     Shim.AssertEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, accuracy: T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: FloatingPoint {
+  public func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, accuracy: T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: FloatingPoint {
     let result = try expression1() == expression2()
     Shim.AssertEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertFalse(_ expression: @autoclosure () throws -> Bool, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character {
+  public func XCTAssertFalse(_ expression: @autoclosure () throws -> Bool, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color {
     let result = try expression() == false
     Shim.AssertFalse(expression, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertGreaterThan<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: Comparable {
+  public func XCTAssertGreaterThan<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: Comparable {
     let result = try expression1() > expression2()
     Shim.AssertGreaterThan(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertGreaterThanOrEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: Comparable {
+  public func XCTAssertGreaterThanOrEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: Comparable {
     let result = try expression1() >= expression2()
     Shim.AssertGreaterThanOrEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertLessThan<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: Comparable {
+  public func XCTAssertLessThan<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: Comparable {
     let result = try expression1() < expression2()
     Shim.AssertLessThan(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertLessThanOrEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: Comparable {
+  public func XCTAssertLessThanOrEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: Comparable {
     let result = try expression1() <= expression2()
     Shim.AssertLessThanOrEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertNil(_ expression: @autoclosure () throws -> Any?, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character {
+  public func XCTAssertNil(_ expression: @autoclosure () throws -> Any?, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color {
     let result = try expression() == nil
     Shim.AssertNil(expression, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertNoThrow<T>(_ expression: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character {
+  public func XCTAssertNoThrow<T>(_ expression: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color {
     let result = (try? expression()) == nil
     Shim.AssertNoThrow(expression, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertNotEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: Equatable {
+  public func XCTAssertNotEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: Equatable {
     let result = try expression1() != expression2()
     Shim.AssertNotEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertNotEqual<T>(_ expression1: @autoclosure () throws -> T?, _ expression2: @autoclosure () throws -> T?, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: Equatable {
+  public func XCTAssertNotEqual<T>(_ expression1: @autoclosure () throws -> T?, _ expression2: @autoclosure () throws -> T?, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: Equatable {
     let result = try expression1() != expression2()
     Shim.AssertNotEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertNotEqual<T>(_ expression1: @autoclosure () throws -> ContiguousArray<T>, _ expression2: @autoclosure () throws -> ContiguousArray<T>, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: Equatable {
+  public func XCTAssertNotEqual<T>(_ expression1: @autoclosure () throws -> ContiguousArray<T>, _ expression2: @autoclosure () throws -> ContiguousArray<T>, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: Equatable {
     let result = try expression1() != expression2()
     Shim.AssertNotEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertNotEqual<T>(_ expression1: @autoclosure () throws -> ArraySlice<T>, _ expression2: @autoclosure () throws -> ArraySlice<T>, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: Equatable {
+  public func XCTAssertNotEqual<T>(_ expression1: @autoclosure () throws -> ArraySlice<T>, _ expression2: @autoclosure () throws -> ArraySlice<T>, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: Equatable {
     let result = try expression1() != expression2()
     Shim.AssertNotEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertNotEqual<T>(_ expression1: @autoclosure () throws -> [T], _ expression2: @autoclosure () throws -> [T], _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: Equatable {
+  public func XCTAssertNotEqual<T>(_ expression1: @autoclosure () throws -> [T], _ expression2: @autoclosure () throws -> [T], _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: Equatable {
     let result = try expression1() != expression2()
     Shim.AssertNotEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertNotEqual<T, U>(_ expression1: @autoclosure () throws -> [T: U], _ expression2: @autoclosure () throws -> [T: U], _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where U: Equatable {
+  public func XCTAssertNotEqual<T, U>(_ expression1: @autoclosure () throws -> [T: U], _ expression2: @autoclosure () throws -> [T: U], _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where U: Equatable {
     let result = try expression1() != expression2()
     Shim.AssertNotEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertNotEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, accuracy: T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character where T: FloatingPoint {
+  public func XCTAssertNotEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, accuracy: T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color where T: FloatingPoint {
     let result = try expression1() != expression2()
     Shim.AssertNotEqual(expression1, expression2, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertNotNil(_ expression: @autoclosure () throws -> Any?, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character {
+  public func XCTAssertNotNil(_ expression: @autoclosure () throws -> Any?, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color {
     let result = try expression() != nil
     Shim.AssertNil(expression, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertThrowsError<T>(_ expression: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line, _ errorHandler: (Error) -> Swift.Void = { _ in }) rethrows -> Character {
+  public func XCTAssertThrowsError<T>(_ expression: @autoclosure () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line, _ errorHandler: (Error) -> Swift.Void = { _ in }) rethrows -> Color {
     let result = (try? expression()) != nil
     Shim.AssertThrowsError(expression, message, file: file, line: line, errorHandler)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTAssertTrue(_ expression: @autoclosure () throws -> Bool, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Character {
+  public func XCTAssertTrue(_ expression: @autoclosure () throws -> Bool, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows -> Color {
     let result = try expression()
     Shim.AssertTrue(expression, message, file: file, line: line)
-    return emoji(for: result)
+    return color(for: result)
   }
 
-  public func XCTFail(_ message: String = "", file: StaticString = #file, line: UInt = #line) -> Character {
+  public func XCTFail(_ message: String = "", file: StaticString = #file, line: UInt = #line) -> Color {
     Shim.Fail(message, file: file, line: line)
-    return emoji(for: false)
+    return color(for: false)
   }
 }
 
