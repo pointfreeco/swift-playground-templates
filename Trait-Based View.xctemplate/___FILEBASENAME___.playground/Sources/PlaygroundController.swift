@@ -27,16 +27,16 @@ public func playgroundController(
 {
   let parent = UIViewController()
   parent.view.frame.size = size
-  parent.view.addSubview(viewController.view)
   parent.preferredContentSize = parent.view.frame.size
-  parent.addChildViewController(viewController)
+  parent.addChild(viewController)
+  parent.view.addSubview(viewController.view)
 
   viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
   viewController.view.frame = parent.view.frame
 
   parent.view.backgroundColor = .white
 
-  parent.setOverrideTraitCollection(traits, forChildViewController: viewController)
+  parent.setOverrideTraitCollection(traits, forChild: viewController)
 
   return parent
 }
