@@ -26,11 +26,10 @@ public func playgroundController(
   -> UIViewController
 {
   let parent = UIViewController()
-  _ = viewController.view
   parent.view.frame.size = size
   parent.preferredContentSize = parent.view.frame.size
-  parent.addChild(viewController)
   parent.view.addSubview(viewController.view)
+  parent.addChild(viewController)
 
   viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
   viewController.view.frame = parent.view.frame
