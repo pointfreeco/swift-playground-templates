@@ -25,20 +25,34 @@ public func playgroundController(
   traits: UITraitCollection = .init())
   -> UIViewController
 {
+  let scale = PlaygroundController.scale
+  let playgroundSize = CGSize(width: size.width * scale, height: size.height * scale)
+    
   let parent = UIViewController()
-  parent.view.frame.size = size
-  parent.preferredContentSize = parent.view.frame.size
+  parent.view.frame.size = playgroundSize
+  parent.preferredContentSize = playgroundSize
   parent.view.addSubview(viewController.view)
   parent.addChild(viewController)
 
-  viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-  viewController.view.frame = parent.view.frame
+  viewController.view.transform = CGAffineTransform(scaleX: scale, y: scale)
+
+  viewController.view.translatesAutoresizingMaskIntoConstraints = false
+  NSLayoutConstraint.activate([
+    NSLayoutConstraint(item: viewController.view, attribute: .centerX, relatedBy: .equal, toItem: parent.view, attribute: .centerX, multiplier: 1, constant: 0),
+    NSLayoutConstraint(item: viewController.view, attribute: .centerY, relatedBy: .equal, toItem: parent.view, attribute: .centerY, multiplier: 1, constant: 0),
+    NSLayoutConstraint(item: viewController.view, attribute: .width, relatedBy: .equal, toItem: parent.view, attribute: .width, multiplier: 1/scale, constant: 0),
+    NSLayoutConstraint(item: viewController.view, attribute: .height, relatedBy: .equal, toItem: parent.view, attribute: .height, multiplier: 1/scale, constant: 0)
+  ])
 
   parent.view.backgroundColor = .white
 
   parent.setOverrideTraitCollection(traits, forChild: viewController)
 
   return parent
+}
+
+public struct PlaygroundController {
+    public static var scale: CGFloat = 1.0
 }
 
 public enum Orientation {
